@@ -39,6 +39,7 @@ import org.sonarlint.intellij.messages.GlobalConfigurationListener;
 import org.sonarlint.intellij.telemetry.SonarLintTelemetry;
 import org.sonarlint.intellij.trigger.SonarLintSubmitter;
 import org.sonarlint.intellij.trigger.TriggerType;
+import org.sonarlint.intellij.ui.SonarLintConsole;
 import org.sonarlint.intellij.util.SonarLintUtils;
 
 public class SonarLintGlobalConfigurable implements Configurable, Configurable.NoScroll {
@@ -52,12 +53,14 @@ public class SonarLintGlobalConfigurable implements Configurable, Configurable.N
   private SonarLintAboutPanel about;
   private GlobalExclusionsPanel exclusions;
   private RuleConfigurationPanel rules;
+  private SonarLintConsole sonarLintConsole;
 
   public SonarLintGlobalConfigurable() {
     this.globalSettings = SonarLintUtils.get(SonarLintGlobalSettings.class);
     this.serverManager = SonarLintUtils.get(SonarLintEngineManager.class);
     this.telemetry = SonarLintUtils.get(SonarLintTelemetry.class);
     this.sonarApplication = SonarLintUtils.get(SonarApplication.class);
+    this.sonarLintConsole = SonarLintUtils.get(SonarLintConsole.class);
   }
 
   @Nls @Override public String getDisplayName() {
@@ -144,7 +147,7 @@ public class SonarLintGlobalConfigurable implements Configurable, Configurable.N
   private JPanel getPanel() {
     if (rootPanel == null) {
       about = new SonarLintAboutPanel(sonarApplication);
-      rules = new RuleConfigurationPanel(serverManager.getStandaloneEngine());
+      rules = new RuleConfigurationPanel(serverManager.getStandaloneEngine(), sonarLintConsole);
       exclusions = new GlobalExclusionsPanel();
       globalPanel = new SonarLintGlobalOptionsPanel();
       serversPanel = new SonarQubeServerMgmtPanel();

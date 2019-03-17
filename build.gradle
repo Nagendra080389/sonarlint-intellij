@@ -70,7 +70,8 @@ configurations {
 
 dependencies {
   compile "org.sonarsource.sonarlint.core:sonarlint-client-api:$sonarlintCoreVersion"
-  compile "org.sonarsource.sonarlint.core:sonarlint-core:$sonarlintCoreVersion"
+  //compile "org.sonarsource.sonarlint.core:sonarlint-core:$sonarlintCoreVersion"
+  compile files('C:\\Resume\\sonarlint-core-4.3-SNAPSHOT.jar')
   compile 'commons-lang:commons-lang:2.6'
   compile 'com.google.code.findbugs:jsr305:2.0.2'
   // provided by the core:

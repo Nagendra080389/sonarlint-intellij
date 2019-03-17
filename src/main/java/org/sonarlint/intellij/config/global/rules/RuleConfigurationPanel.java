@@ -62,6 +62,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.tree.TreePath;
 import org.sonarlint.intellij.config.ConfigurationPanel;
 import org.sonarlint.intellij.config.global.SonarLintGlobalSettings;
+import org.sonarlint.intellij.ui.SonarLintConsole;
 import org.sonarsource.sonarlint.core.client.api.common.RuleDetails;
 import org.sonarsource.sonarlint.core.client.api.standalone.StandaloneSonarLintEngine;
 
@@ -76,11 +77,13 @@ public class RuleConfigurationPanel implements ConfigurationPanel<SonarLintGloba
   private RulesTreeTableModel model;
   private FilterComponent filterComponent;
   private TreeExpander myTreeExpander;
+  private SonarLintConsole console;
 
   private Map<String, Boolean> currentActivationByRuleKey;
 
-  public RuleConfigurationPanel(StandaloneSonarLintEngine engine) {
+  public RuleConfigurationPanel(StandaloneSonarLintEngine engine, SonarLintConsole console) {
     this.engine = engine;
+    this.console = console;
     createUIComponents();
   }
 
@@ -132,6 +135,12 @@ public class RuleConfigurationPanel implements ConfigurationPanel<SonarLintGloba
   private void updateModel() {
     saveCurrentActivation();
     Collection<RuleDetails> ruleDetails = engine.getAllRuleDetails();
+    if(console != null) {
+      for (RuleDetails ruleDetail : ruleDetails) {
+        console.info(ruleDetail.getExtendedDescription());
+      }
+
+    }
     Map<String, List<RulesTreeNode.Rule>> rulesByLanguage = ruleDetails.stream()
       .map(r -> new RulesTreeNode.Rule(r, currentActivationByRuleKey.get(r.getKey())))
       .filter(filterModel::filter)
