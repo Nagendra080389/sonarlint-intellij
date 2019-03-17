@@ -66,7 +66,7 @@ final class StandaloneSonarLintFacade extends SonarLintFacade {
     List<RuleKey> included = globalSettings.getIncludedRules().stream().map(RuleKey::parse).collect(Collectors.toList());
 
     StandaloneAnalysisConfiguration config = new StandaloneAnalysisConfiguration(baseDir, workDir, inputFiles, props, excluded, included);
-    console.debug("Starting analysis with configuration:\n" + config.toString());
+    console.info("Starting analysis with configuration:\n" + config.toString());
     return sonarlint.analyze(config, issueListener, new ProjectLogOutput(console, projectSettings), progressMonitor);
   }
 
