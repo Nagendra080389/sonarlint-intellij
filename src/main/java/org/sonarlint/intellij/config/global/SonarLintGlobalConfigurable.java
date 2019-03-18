@@ -60,7 +60,7 @@ public class SonarLintGlobalConfigurable implements Configurable, Configurable.N
     this.serverManager = SonarLintUtils.get(SonarLintEngineManager.class);
     this.telemetry = SonarLintUtils.get(SonarLintTelemetry.class);
     this.sonarApplication = SonarLintUtils.get(SonarApplication.class);
-    this.sonarLintConsole = SonarLintUtils.get(SonarLintConsole.class);
+    //this.sonarLintConsole = SonarLintUtils.get(SonarLintConsole.class);
   }
 
   @Nls @Override public String getDisplayName() {
